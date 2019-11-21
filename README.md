@@ -21,40 +21,58 @@ Things you may want to cover:
 
 * Deployment instructions
 
-## groups_usersテーブル
+## DB設計
+### groups_users_table
 |Column|Type|Options|
 |------|----|-------|
 |user_id|integer|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
 
-### Association
+Association
 - belongs_to :group
 - belongs_to :user
 
-### usersテーブル
+### users_table
 |Column|Type|Options|
 |------|----|-------|
 |id|integer|null: false, foreign_key: true|
+|user_name|text|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
 |password|integer|null: false, foreign_key: true|
-|created_at|integer|null: false, foreign_key: true|
-|updated_at|integer|null: false, foreign_key: true|
+|created_at|timestamp|null: false, foreign_key: true|
+|updated_at|timestamp|null: false, foreign_key: true|
 
-#### Association
-- has_many :groups
-- has_many :users
+Association
 - has_many :chats
+- has_many :groups
+- has_many :groups, through: :groups_users_table
 
-#### chatsテーブル
+### chats_table
 |Column|Type|Options|
 |------|----|-------|
 |id|integer|null: false, foreign_key: true|
 |user_id|integer|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
-|text|text|null: false, foreign_key: true|
+|comment|text|null: false, foreign_key: true|
 |image|text|null: false, foreign_key: true|
-|created_at|integer|null: false, foreign_key: true|
-|updated_at|integer|null: false, foreign_key: true|
+|created_at|timestamp|null: false, foreign_key: true|
+|updated_at|timestamp|null: false, foreign_key: true|
 
-##### Association
+Association
 - belongs_to :user
+- belongs_to :group
+
+### groups_table
+|Column|Type|Options|
+|------|----|-------|
+|id|integer|null: false, foreign_key: true|
+|group_id|integer|null: false, foreign_key: true|
+|group_name|text|null: false, foreign_key: true|
+|user_id|integer|null: false, foreign_key: true|
+|created_at|timestamp|null: false, foreign_key: true|
+|updated_at|timestamp|null: false, foreign_key: true|
+
+Association
+- has_many :chats
+- has_many :users
+- has_many :users, through: :groups_users_table
