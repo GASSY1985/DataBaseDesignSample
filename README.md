@@ -36,16 +36,15 @@ Association
 |Column|Type|Options|
 |------|----|-------|
 |id|integer|null: false, foreign_key: true|
-|user_name|text|null: false, foreign_key: true|
-|group_id|integer|null: false, foreign_key: true|
+|name|string|null: false, foreign_key: true|
 |password|integer|null: false, foreign_key: true|
 |created_at|timestamp|null: false, foreign_key: true|
 |updated_at|timestamp|null: false, foreign_key: true|
 
 Association
 - has_many :chats
-- has_many :groups
-- has_many :groups, through: :groups_users_table
+- has_many :groups_users
+- has_many :groups, through: :groups_users
 
 ### chats_table
 |Column|Type|Options|
@@ -53,8 +52,8 @@ Association
 |id|integer|null: false, foreign_key: true|
 |user_id|integer|null: false, foreign_key: true|
 |group_id|integer|null: false, foreign_key: true|
-|comment|text|null: false, foreign_key: true|
-|image|text|null: false, foreign_key: true|
+|comment|text|foreign_key: true|
+|image|text|foreign_key: true|
 |created_at|timestamp|null: false, foreign_key: true|
 |updated_at|timestamp|null: false, foreign_key: true|
 
@@ -66,13 +65,9 @@ Association
 |Column|Type|Options|
 |------|----|-------|
 |id|integer|null: false, foreign_key: true|
-|group_id|integer|null: false, foreign_key: true|
-|group_name|text|null: false, foreign_key: true|
-|user_id|integer|null: false, foreign_key: true|
-|created_at|timestamp|null: false, foreign_key: true|
-|updated_at|timestamp|null: false, foreign_key: true|
+|name|string|null: false, foreign_key: true|
 
 Association
 - has_many :chats
-- has_many :users
-- has_many :users, through: :groups_users_table
+- has_many :groups_users
+- has_many :users, through: :groups_users
